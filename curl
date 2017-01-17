@@ -1,0 +1,1 @@
+curl -d "message[user_id]=1" -d "message[body]=Teste de mensagem" -d "message[chat_id]=2" localhost:3000/api/v1/add_to_redis
