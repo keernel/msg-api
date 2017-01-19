@@ -3,6 +3,7 @@ module Api::V1
 
     # GET /v1/messages
     def add_to_redis
+      # binding.pry
       # time = Benchmark.measure do
       # Parse and validated message
       message = Message.new(message_params)
