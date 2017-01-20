@@ -1,4 +1,7 @@
 require 'rails_helper'
+require "fakeredis"
+
+$redis_msg = Redis.new
 
 describe Api::V1::MessagesController, type: :controller do
   # TBD STUB REDIS OR USE FAKEREDIS
@@ -30,6 +33,7 @@ describe Api::V1::MessagesController, type: :controller do
       end
     end
     context 'with missing params' do
+      # TBD REFACTOR
       it 'respond with error for missing chat_id' do
         post :add_to_redis, params: { message: new_message.except('chat_id') }
         expect(response.body).to eq "{\"error\":{\"chat_id\":[\"can't be blank\"]}}"
@@ -50,10 +54,17 @@ describe Api::V1::MessagesController, type: :controller do
   context 'close_chat request' do
 
     context 'with correct chat_id' do
-      let(:messages) { build_list(:message, 10, :new_chat, :new_user) }
+      binding.pry
+      let(:messages) { build_list(:message, 10, :new_user, chat_id: 1) }
+      $redis_msg.hset("chat-1", "message_id", 0)
 
       it 'responds with a 200 status' do
+        messages.each do |m|
+          message_id = $redis_msg.hincrby("chat-1", "message_id", 1)
+          $redis_msg.hset("chat-1", "msg-#{message_id}", m.to_json)
+        end
         binding.pry
+        $redis_msg.hgetall("chat-1")
       end
     end
   end
