@@ -1,5 +1,12 @@
 module Api::V1
   class MessagesController < ApiController
+    # POST api/v1/close_chat
+    def close_chat
+      # Check if the chat exists
+      # Check if it's open
+
+    end
+
     # POST api/v1/add_to_redis
     def add_to_redis
       # Parse and validated message
@@ -25,7 +32,7 @@ module Api::V1
         $redis_msg.hset("chat-#{message.chat_id}", "msg-#{message_id}", json_message)
       end
 
-      # Post to Pusher
+      # Send notification to Pusher
       Pusher.trigger("chat-#{message.chat_id}", "new_message", json_message)
       # ============================ Refactor to class method ============================== END
 
@@ -33,14 +40,11 @@ module Api::V1
         message: message
       }.to_json
 
-      ######
+      ####### Get Live/Chat current redis data
       # $redis_msg.hgetall("chat-#{message.chat_id}")
       ######
 
-      # Get Live/Chat current redis data
 
-      # Send notification to Pusher
-        # Or do nothing, because it could be sent within the client
 
     end
 

@@ -1,12 +1,13 @@
 require 'rails_helper'
 
-describe Api::V1::MessagesController, type: :controller do
+describe Api::V1::MessagesController, type: :request do
   before(:each) do
     @message = build(:message, :new_chat, :new_user)
     @new_message = @message.as_json(only: [:chat_id, :user_id, :body])
   end
 
   # TBD STUB REDIS OR USE FAKEREDIS
+  it "should connect to redis"
 
   context 'with correct data' do
     before do
