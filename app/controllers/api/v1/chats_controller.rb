@@ -4,9 +4,14 @@ module Api::V1
     # GET api/v1/chat_report/
     def chat_report
       chat_report = ChatReport.find_by chat_id: params[:chat][:id]
-      render status: 200, json: {
-        chat_report: chat_report
-      }
+
+      if chat_report.present?
+        render status: 200, json: {
+          chat_report: chat_report
+        }
+      else
+        render status: 404
+      end
     end
 
     # POST api/v1/close_chat/
