@@ -5,8 +5,8 @@ FactoryGirl.define do
     body { Faker::StarWars.quote }
     sent_at { Faker::Time.between(5.minutes.ago, 1.minute.ago, :all) }
 
-    trait(:new_chat) do
-      chat_id { Faker::Number.between(1, 10) }
+    trait(:new_live) do
+      live_id { Faker::Number.between(1, 10) }
     end
 
     trait(:new_user) do

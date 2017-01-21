@@ -9,13 +9,14 @@ class ApiServices
       end
     end
   end
-  def self.find_redis_chat(chat_id)
-    messages = $redis_msg.hgetall("chat-#{chat_id}")
+  def self.find_redis_chat(live_id)
+    messages = $redis_msg.hgetall("live-#{live_id}")
     return messages.any? ? messages : nil
   end
 
   def self.create_chat_report(chat)
     chat_report = ChatReport.create(chat: chat,
+     live_id: chat.live_id,
      qty_messages: chat.messages.length,
      qty_of_users: chat.users.uniq.length
     )

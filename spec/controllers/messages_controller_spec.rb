@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Api::V1::MessagesController, type: :controller do
   context 'add_to_redis request' do
-    let(:message) { build(:message, :new_chat, :new_user) }
-    let(:new_message) { message.as_json(only: [:chat_id, :user_id, :body]) }
+    let(:message) { build(:message, :new_live, :new_user) }
+    let(:new_message) { message.as_json(only: [:live_id, :user_id, :body]) }
 
     context 'with correct data' do
       before do
@@ -28,9 +28,9 @@ describe Api::V1::MessagesController, type: :controller do
     end
     context 'with missing params' do
       # TBD REFACTOR
-      it 'respond with error for missing chat_id' do
-        post :add_to_redis, params: { message: new_message.except('chat_id') }
-        expect(response.body).to eq "{\"error\":{\"chat_id\":[\"can't be blank\"]}}"
+      it 'respond with error for missing live_id' do
+        post :add_to_redis, params: { message: new_message.except('live_id') }
+        expect(response.body).to eq "{\"error\":{\"live_id\":[\"can't be blank\"]}}"
       end
 
       it 'respond with error for missing user_id' do

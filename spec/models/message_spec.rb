@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  let(:message) { build(:message, :new_chat, :new_user) }
+  let(:message) { build(:message, :new_live, :new_user) }
   # Use factories traits to deal with chats and users that isn't on our db yet
   it 'has a valid factory' do
     expect(message).to be_valid

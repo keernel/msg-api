@@ -3,7 +3,7 @@ module Api::V1
 
     # GET api/v1/chat_report/
     def chat_report
-      chat_report = ChatReport.find_by chat_id: params[:chat][:id]
+      chat_report = ChatReport.find_by live_id: params[:live][:id]
 
       if chat_report.present?
         render status: 200, json: {
@@ -16,12 +16,12 @@ module Api::V1
 
     # POST api/v1/close_chat/
     def close_chat
-      messages = ApiServices.find_redis_chat(params[:chat][:id])
+      messages = ApiServices.find_redis_chat(params[:live][:id])
 
       if messages.nil?
         render status: 404
       else
-        chat = Chat.create
+        chat = Chat.create(live_id: params[:live][:id])
         ApiServices.create_chat_messages(chat, messages)
         chat_report = ApiServices.create_chat_report(chat)
 
@@ -34,7 +34,7 @@ module Api::V1
 
     private
     def chat_params
-      params.require(:chat).permit(:id)
+      params.require(:chat).permit(:id, :live_id)
     end
   end
 end
