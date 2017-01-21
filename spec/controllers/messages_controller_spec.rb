@@ -1,13 +1,6 @@
 require 'rails_helper'
-require "fakeredis"
-include MessagesHelper
-
-$redis_msg = Redis.new
 
 describe Api::V1::MessagesController, type: :controller do
-  # TBD STUB REDIS OR USE FAKEREDIS
-  it "should connect to redis"
-
   context 'add_to_redis request' do
     let(:message) { build(:message, :new_chat, :new_user) }
     let(:new_message) { message.as_json(only: [:chat_id, :user_id, :body]) }
@@ -48,24 +41,6 @@ describe Api::V1::MessagesController, type: :controller do
       it 'respond with error for missing body' do
         post :add_to_redis, params: { message: new_message.except('body') }
         expect(response.body).to eq "{\"error\":{\"body\":[\"can't be blank\"]}}"
-      end
-    end
-  end
-
-  context 'close_chat request' do
-
-    context 'with an existing chat_id' do
-      let(:messages) { build_list(:message, 10, :new_user, chat_id: 1) }
-      $redis_msg.hset("chat-1", "message_id", 0)
-
-      before do
-        MessagesHelper.mock_redis_messages(messages, $redis_msg)
-      end
-
-      it 'responds with a 200 status' do
-        binding.pry
-        post :close_chat, params: { chat: { id: 1 } }
-
       end
     end
   end

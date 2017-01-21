@@ -1,16 +1,8 @@
 module Api::V1
   class MessagesController < ApiController
-    # POST api/v1/close_chat
-    def close_chat
-      # Check if the chat exists
-      # Check if it's open
-
-    end
-
     # POST api/v1/add_to_redis
     def add_to_redis
       # Parse and validated message
-
       # BEGIN ============================ Refactor to class method ==============================
       message = Message.new(message_params)
       message.sent_at = Time.now
@@ -39,13 +31,9 @@ module Api::V1
       render status: 200, json: {
         message: message
       }.to_json
-
       ####### Get Live/Chat current redis data
       # $redis_msg.hgetall("chat-#{message.chat_id}")
       ######
-
-
-
     end
 
     private

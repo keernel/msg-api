@@ -1,4 +1,6 @@
 require 'capybara/rspec'
+require "fakeredis"
+$redis_msg = Redis.new
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
