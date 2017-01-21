@@ -16,20 +16,14 @@ module Api::V1
 
     # POST api/v1/close_chat/
     def close_chat
-      # 1 -Check if the chat exists in redis and if it has messages
-      messages = find_redis_chat(params[:chat][:id])
+      messages = ApiServices.find_redis_chat(params[:chat][:id])
+
       if messages.nil?
         render status: 404
       else
-        # 2- Creates the chat/live on db
         chat = Chat.create
-        # 3- Save the redis associated chat/live messages to db
-        create_chat_messages(chat, messages)
-        # 4- Create chat/live report
-        chat_report = ChatReport.create(chat: chat,
-         qty_messages: chat.messages.length,
-         qty_of_users: chat.users.uniq.length
-        )
+        ApiServices.create_chat_messages(chat, messages)
+        chat_report = ApiServices.create_chat_report(chat)
 
         render status: 200, json: {
           chat: chat,
@@ -37,24 +31,6 @@ module Api::V1
         }
       end
     end
-
-    # REFACTOR TO MODULES # REFACTOR TO MODULES # REFACTOR TO MODULES
-    def create_chat_messages(chat, messages)
-      messages.each do |m|
-        if m.grep(/msg/).any?
-          new_message = JSON.parse m[1]
-          message = chat.messages.new(new_message)
-          message.user = User.find_or_create_by id: new_message["user_id"]
-          message.save
-        end
-      end
-    end
-
-    def find_redis_chat(chat_id)
-      messages = $redis_msg.hgetall("chat-#{chat_id}")
-      return messages.any? ? messages : nil
-    end
-    # REFACTOR TO MODULES # REFACTOR TO MODULES # REFACTOR TO MODULES
 
     private
     def chat_params
