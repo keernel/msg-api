@@ -20,7 +20,6 @@ describe Api::V1::ChatsController, type: :controller do
       end
 
       it 'responds with a 200 status' do
-        create(:chat)
         post :close_chat, params: { chat: { id: 1 } }
         expect(response.status).to eq 200
       end
@@ -30,8 +29,6 @@ describe Api::V1::ChatsController, type: :controller do
       it 'creates the chat/live'
 
       it 'save the redis associated chat/live messages to db'
-
-      it 'set chat/live as closed'
 
     end
   end

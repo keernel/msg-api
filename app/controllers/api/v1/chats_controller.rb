@@ -2,23 +2,19 @@ module Api::V1
   class ChatsController < ApiController
     # POST api/v1/close_chat/:chat_id
     def close_chat
-      # Check if the chat exists
-      chat = Chat.find(params[:chat][:id])
-
       # 1 -Check if the chat exists in redis and if it has messages
-      messages = find_redis_chat(chat.id)
-
-      if messages.any?
+      messages = find_redis_chat(params[:chat][:id])
+      if messages.nil?
+        render status: 404
+      else
         # 2- Creates the chat/live on db
         chat = Chat.create
         # 3- Save the redis associated chat/live messages to db
         create_chat_messages(chat, messages)
+        render status: 200, json: {
+          chat: chat
+        }.to_json
       end
-
-
-      render status: 200, json: {
-        chat: chat
-      }.to_json
     end
 
     def create_chat_messages(chat, messages)
