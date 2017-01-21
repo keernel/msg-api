@@ -29,7 +29,7 @@ describe Api::V1::ChatsController, type: :controller do
 
     before do
       @chat = create :chat
-      @chat_report = ApiServices.create_chat_report(@chat)
+      ApiServices.create_chat_report(@chat)
     end
 
     context 'with a wrong chat_id' do
