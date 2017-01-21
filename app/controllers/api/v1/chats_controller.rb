@@ -11,9 +11,16 @@ module Api::V1
         chat = Chat.create
         # 3- Save the redis associated chat/live messages to db
         create_chat_messages(chat, messages)
+        # 4- Create chat/live report
+        chat_report = ChatReport.create(chat: chat,
+         qty_messages: chat.messages.length,
+         qty_of_users: chat.users.uniq.length
+        )
+
         render status: 200, json: {
-          chat: chat
-        }.to_json
+          chat: chat,
+          chat_report: chat_report
+        }
       end
     end
 

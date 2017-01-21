@@ -23,13 +23,6 @@ describe Api::V1::ChatsController, type: :controller do
         post :close_chat, params: { chat: { id: 1 } }
         expect(response.status).to eq 200
       end
-
-      it 'check if chat exists in redis'
-
-      it 'creates the chat/live'
-
-      it 'save the redis associated chat/live messages to db'
-
     end
   end
 end
