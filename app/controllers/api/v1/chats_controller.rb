@@ -1,6 +1,6 @@
 module Api::V1
   class ChatsController < ApiController
-    # POST api/v1/close_chat
+    # POST api/v1/close_chat/:chat_id
     def close_chat
       # Check if the chat exists
       chat = Chat.find(params[:chat][:id])
@@ -9,6 +9,7 @@ module Api::V1
         chat: chat
       }.to_json
     end
+
     private
     def chat_params
       params.require(:chat).permit(:id)
