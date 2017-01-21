@@ -17,6 +17,15 @@ describe Api::V1::ChatsController, type: :controller do
         expect(response.status).to eq 404
       end
     end
+
+    context 'with an existing chat_id' do
+      it 'responds with a 200 status' do
+        Chat.create
+        binding.pry
+        post :close_chat, params: { chat: { id: 1 } }
+        expect(response.status).to eq 200
+      end
+    end
   end
 end
 
