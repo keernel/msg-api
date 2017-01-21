@@ -1,5 +1,6 @@
 require 'rails_helper'
 require "fakeredis"
+include MessagesHelper
 
 $redis_msg = Redis.new
 
@@ -53,18 +54,18 @@ describe Api::V1::MessagesController, type: :controller do
 
   context 'close_chat request' do
 
-    context 'with correct chat_id' do
-      binding.pry
+    context 'with an existing chat_id' do
       let(:messages) { build_list(:message, 10, :new_user, chat_id: 1) }
       $redis_msg.hset("chat-1", "message_id", 0)
 
+      before do
+        MessagesHelper.mock_redis_messages(messages, $redis_msg)
+      end
+
       it 'responds with a 200 status' do
-        messages.each do |m|
-          message_id = $redis_msg.hincrby("chat-1", "message_id", 1)
-          $redis_msg.hset("chat-1", "msg-#{message_id}", m.to_json)
-        end
         binding.pry
-        $redis_msg.hgetall("chat-1")
+        post :close_chat, params: { chat: { id: 1 } }
+
       end
     end
   end
