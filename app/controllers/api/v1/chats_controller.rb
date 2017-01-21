@@ -1,6 +1,15 @@
 module Api::V1
   class ChatsController < ApiController
-    # POST api/v1/close_chat/:chat_id
+
+    # GET api/v1/chat_report/
+    def chat_report
+      chat_report = ChatReport.find_by chat_id: params[:chat][:id]
+      render status: 200, json: {
+        chat_report: chat_report
+      }
+    end
+
+    # POST api/v1/close_chat/
     def close_chat
       # 1 -Check if the chat exists in redis and if it has messages
       messages = find_redis_chat(params[:chat][:id])
@@ -24,6 +33,7 @@ module Api::V1
       end
     end
 
+    # REFACTOR TO MODULES # REFACTOR TO MODULES # REFACTOR TO MODULES
     def create_chat_messages(chat, messages)
       messages.each do |m|
         if m.grep(/msg/).any?
@@ -39,6 +49,7 @@ module Api::V1
       messages = $redis_msg.hgetall("chat-#{chat_id}")
       return messages.any? ? messages : nil
     end
+    # REFACTOR TO MODULES # REFACTOR TO MODULES # REFACTOR TO MODULES
 
     private
     def chat_params
