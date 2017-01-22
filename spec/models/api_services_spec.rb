@@ -4,7 +4,7 @@ include MessagesHelper
 RSpec.describe ApiServices, type: :model do
   let(:messages) { build_list(:message, 10, :new_user, live_id: 1) }
   let(:chat) { create(:chat, live_id: 1) }
-  $redis_msg.hset("live-1", "message_id", 0)
+  $redis_msg.hset('live-1', 'message_id', 0)
 
   before do
     MessagesHelper.mock_redis_messages(messages, $redis_msg)
@@ -18,9 +18,9 @@ RSpec.describe ApiServices, type: :model do
   end
 
   it 'create messages on DB based on Hash of redis messages' do
-    message = JSON.parse @redis_chat["msg-1"]
+    message = JSON.parse @redis_chat['msg-1']
     expect(@redis_chat.length - 1).to eq Message.count
-    expect(message["body"]).to eq Message.first.body
+    expect(message['body']).to eq Message.first.body
   end
 
   it 'create chat report with a valid chat' do
