@@ -2,7 +2,7 @@ class MostActiveUsersJob < ApplicationJob
   queue_as :default
 
   def perform(date = nil)
-    date = Date.parse date
+    date = Date.parse(date) if date.present?
     date ||= Date.today
     puts "Working on most active users on #{date}..."
     # 1- Get all date messages and users that sent message on this date
