@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+# (1..310).each do |m|
+  # FactoryGirl.create(:message, :new_live, user_id: 51, chat_id: 241)
+# end

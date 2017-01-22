@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121221131) do
+ActiveRecord::Schema.define(version: 20170122144731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(version: 20170121221131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "live_id"
+  end
+
+  create_table "daily_winners", force: :cascade do |t|
+    t.date     "date"
+    t.text     "users"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|

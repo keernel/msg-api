@@ -3,3 +3,5 @@ curl -d "message[user_id]=1231" -d "message[body]=Teste de mensagem 123" -d "mes
 curl -d "live[id]=2" localhost:3000/api/v1/close_chat
 
 curl -d "live[id]=2" localhost:3000/api/v1/chat_report
+
+curl -d "date=2017/10/10" localhost:3000/api/v1/winners_on_date
