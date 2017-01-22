@@ -5,6 +5,7 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 gem 'redis'
 gem 'redis-namespace'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'pry'
