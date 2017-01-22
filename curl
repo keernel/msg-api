@@ -4,4 +4,15 @@ curl -d "live[id]=2" localhost:3000/api/v1/close_chat
 
 curl -d "live[id]=2" localhost:3000/api/v1/chat_report
 
-curl -d "date=2017/10/10" localhost:3000/api/v1/winners_on_date
+curl -d "date=2017/01/22" localhost:3000/api/v1/winners_on_date
+
+# Production
+
+curl -d "message[user_id]=1" -d "message[body]=Teste de mensagem 100" -d "message[live_id]=100" http://clapme-msg-api.herokuapp.com/api/v1/add_to_redis
+
+curl -d "message[user_id]=2" -d "message[body]=Teste de mensagem 2" -d "message[live_id]=100" http://clapme-msg-api.herokuapp.com/api/v1/add_to_redis
+
+
+curl -d "live[id]=100" http://clapme-msg-api.herokuapp.com/api/v1/close_chat
+
+curl -d "live[id]=100" http://clapme-msg-api.herokuapp.com/api/v1/chat_report
