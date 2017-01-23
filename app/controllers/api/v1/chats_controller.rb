@@ -33,8 +33,8 @@ module Api::V1
     end
 
     private
-    def chat_params
-      params.require(:chat).permit(:id, :live_id)
+    def live_params
+      params.require(:live).permit(:id)
     end
   end
 end
