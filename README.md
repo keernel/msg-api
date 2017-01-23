@@ -1,24 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+Documentation on:
+https://app.swaggerhub.com/api/keernel/Test2/1.0.0
 
 * Ruby version
-
-* System dependencies
+  2.4.0
 
 * Configuration
+  bundle install
 
 * Database creation
-
-* Database initialization
+  rake db:create
+  rake db:migrate
 
 * How to run the test suite
+  rspec -f doc
 
 * Services (job queues, cache servers, search engines, etc.)
+  redis-server
+  sidekiq
 
 * Deployment instructions
-
-* ...
+  heroku
