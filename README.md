@@ -19,6 +19,8 @@ https://app.swaggerhub.com/api/keernel/Test2/1.0.0
 * Services (job queues, cache servers, search engines, etc.)
   redis-server
   sidekiq
+  job execution with HerokuScheduler: https://scheduler.heroku.com
+  (for sample demonstration only)
 
 * Deployment instructions
   heroku
